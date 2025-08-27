@@ -15,13 +15,41 @@ const Authentication = () => {
     nav("/");
   }
   async function handleRegister() {
-    await register(email, password);
-    resetState();
+    if (!email || !password) {
+      alert("Введите email и пароль");
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      alert("Введите корректный email");
+      return;
+    }
+    try {
+      await register(email, password);
+      resetState();
+    } catch (err) {
+      console.error(err.message);
+      alert("Ошибка регистрации: " + err.message);
+    }
   }
+
   async function handleSingIn() {
-    await signIn(email, password);
-    resetState();
+    if (!email || !password) {
+      alert("Введите email и пароль");
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      alert("Введите корректный email");
+      return;
+    }
+    try {
+      await signIn(email, password);
+      resetState();
+    } catch (err) {
+      console.error(err.message);
+      alert("Ошибка входа: " + err.message);
+    }
   }
+
   return (
     <div className="auth">
       <div className="auth__container">
